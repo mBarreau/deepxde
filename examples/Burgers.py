@@ -38,7 +38,8 @@ def main():
     net = dde.maps.FNN([2] + [20] * 3 + [1], "tanh", "Glorot normal")
     model = dde.Model(data, net)
 
-    model.compile("adam", lr=1e-3)
+    model.compile("adam", lr=1e-3, loss_weights=[1, 0.5, 0.5], 
+                  loss_constraints=[True, False, False])
     model.train(epochs=15000)
     model.compile("L-BFGS-B")
     losshistory, train_state = model.train()
